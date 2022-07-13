@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "$E2438818L-",
+    "database": "sisactividades",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "$E2438818L-",
+    "database": "sisactividades",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "$E2438818L-",
+    "database": "sisactividades",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
