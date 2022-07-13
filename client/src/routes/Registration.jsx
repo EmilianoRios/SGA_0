@@ -73,7 +73,7 @@ export const Registration = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleS}
+          onSubmit={onSubmit}
         >
           <Form>
             <VStack spacing={4} align="flex-start">
