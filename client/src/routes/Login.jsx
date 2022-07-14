@@ -31,7 +31,7 @@ export const Login = () => {
 
   // TODO Traducir validaciones/mensajes personalizados
   const validationSchema = Yup.object().shape({
-    documento_dni: Yup.string().required().min(8).max(8),
+    documento_dni: Yup.number().required("Ingrese su DNI"),
     contrasena: Yup.string().required(),
   });
 
@@ -46,12 +46,23 @@ export const Login = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
+          onSubmit={(values, actions) => {
+            alert(JSON.stringify(values, null, 2));
+          }}
         >
-          <form>
-            <VStack spacing={4} align="flex-start">
-              <FormControl>
-                <FormLabel htmlFor="documento_dni">Documento DNI</FormLabel>
+          {(formik) => (
+            <VStack
+              as="form"
+              spacing={4}
+              align="flex-start"
+              onSubmit={formik.handleSubmit}
+            >
+              <FormControl
+                isInvalid={
+                  formik.errors.documento_dni && formik.touched.documento_dni
+                }
+              >
+                <FormLabel>Documento DNI</FormLabel>
                 <Field
                   as={Input}
                   id="documento_dni"
@@ -59,9 +70,16 @@ export const Login = () => {
                   type="number"
                   variant="flushed"
                 />
+                <FormErrorMessage>
+                  {formik.errors.documento_dni}
+                </FormErrorMessage>
               </FormControl>
-              <FormControl>
-                <FormLabel htmlFor="contrasena">Contraseña</FormLabel>
+              <FormControl
+                isInvalid={
+                  formik.errors.contrasena && formik.touched.contrasena
+                }
+              >
+                <FormLabel>Contraseña</FormLabel>
                 <Field
                   as={Input}
                   id="contrasena"
@@ -70,11 +88,12 @@ export const Login = () => {
                   variant="flushed"
                 />
               </FormControl>
+              <FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
               <Button type="submit" colorScheme="blue" width="full">
-                  Iniciar Sesión
+                Iniciar Sesión
               </Button>
             </VStack>
-          </form>
+          )}
         </Formik>
       </Box>
     </Flex>
