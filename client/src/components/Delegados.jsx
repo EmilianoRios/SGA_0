@@ -20,12 +20,12 @@ export const Delegados = () => {
 				<Stack direction="column" spacing={4}>
 					<ReactRouter to="/gestion/delegados">
 						<Button colorScheme="blue" width="full">
-							Alta y Modificación de Delegados
+							Alta de Delegados
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/listado/delegados">
 						<Button colorScheme="blue" width="full">
-							Listado de Delegados
+							Listado y Modificación de Delegados
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/home">

@@ -27,28 +27,28 @@ router.get("/incorporados/todos", async (req, res) => {
 // ---- Ultima id de las tablas de encargados ----
 
 router.get("/coordinadores/ultimo", async (req, res) => {
-    const ultimaIdCoordinador = await Coordinadores.findOne({order: [['id', 'DESC']],});
+    const ultimaIdCoordinador = await Coordinadores.findOne({ order: [['id', 'DESC']], });
     res.json(ultimaIdCoordinador);
 });
 
 router.get("/subcoordinadores/ultimo", async (req, res) => {
-    const ultimaIdSubCoordinador = await SubCoordinadores.findOne({order: [['id', 'DESC']],});
+    const ultimaIdSubCoordinador = await SubCoordinadores.findOne({ order: [['id', 'DESC']], });
     res.json(ultimaIdSubCoordinador);
 });
 
 router.get("/delegados/ultimo", async (req, res) => {
-    const ultimaIdDelegado = await Delegados.findOne({order: [['id', 'DESC']],});
+    const ultimaIdDelegado = await Delegados.findOne({ order: [['id', 'DESC']], });
     res.json(ultimaIdDelegado);
 });
 
 router.get("/incorporados/ultimo", async (req, res) => {
-    const ultimaIdIncorporado = await Incorporados.findOne({order: [['id', 'DESC']],});
+    const ultimaIdIncorporado = await Incorporados.findOne({ order: [['id', 'DESC']], });
     res.json(ultimaIdIncorporado);
 });
 
 // ---- Encargados por Id ----
 
-router.get("/coordinadores/porId/:id", async (req, res) => {
+router.get("/coordinadores/porid/:id", async (req, res) => {
     const id = req.params.id;
     const coordinador = await Coordinadores.findByPk(id);
     res.json(coordinador);

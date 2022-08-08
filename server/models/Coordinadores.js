@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         fecha_nacimiento: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         edad: {
@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         fecha_ingreso: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         item: {
