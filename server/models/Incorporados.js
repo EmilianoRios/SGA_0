@@ -1,12 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-    const Incorporados = sequelize.define("Incorporados",{
-        alias_incorporado: {
+    const Incorporados = sequelize.define("Incorporados", {
+        alias: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        id_delegado: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            unique: true,
         },
         documento_dni: {
             type: DataTypes.INTEGER,
@@ -30,11 +27,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         telefono_principal: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+            type: DataTypes.BIGINT,
+            allowNull: true,
         },
         correo: {
             type: DataTypes.STRING,
+            allowNull: false,
             unique: true
         },
         domicilio: {
@@ -62,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         item: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         }
     });
     return Incorporados;

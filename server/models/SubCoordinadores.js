@@ -1,12 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-    const SubCoordinadores = sequelize.define("SubCoordinadores",{
-        alias_subcoordinador: {
+    const SubCoordinadores = sequelize.define("SubCoordinadores", {
+        alias: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        id_coordinador: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            unique: true,
         },
         documento_dni: {
             type: DataTypes.INTEGER,
@@ -30,11 +27,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         telefono_principal: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+            type: DataTypes.BIGINT,
+            allowNull: true,
         },
         correo: {
             type: DataTypes.STRING,
+            allowNull: false,
             unique: true
         },
         domicilio: {
@@ -62,11 +60,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         item: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        imagen_perfil: {
-            type: DataTypes.STRING,
+            allowNull: true,
         }
     });
+
+    SubCoordinadores.associate = (models) => {
+        SubCoordinadores.hasMany(models.Delegados)
+    }
+
     return SubCoordinadores;
 }

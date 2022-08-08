@@ -1,12 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-    const Delegados = sequelize.define("Delegados",{
-        alias_delegado: {
+    const Delegados = sequelize.define("Delegados", {
+        alias: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        id_subcoordinador: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            unique: true,
         },
         documento_dni: {
             type: DataTypes.INTEGER,
@@ -30,11 +27,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         telefono_principal: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+            type: DataTypes.BIGINT,
+            allowNull: true,
         },
         correo: {
             type: DataTypes.STRING,
+            allowNull: false,
             unique: true
         },
         domicilio: {
@@ -62,8 +60,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         item: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     });
+
+    Delegados.associate = (models) => {
+        Delegados.hasMany(models.Incorporados)
+    }
+
     return Delegados;
 }

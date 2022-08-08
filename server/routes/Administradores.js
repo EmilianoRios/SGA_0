@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Users } = require("../models");
+const { Administradores } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sign } = require("jsonwebtoken");
@@ -8,7 +8,7 @@ const { sign } = require("jsonwebtoken");
 router.post("/", async (req, res) => {
     const { first_name, password } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
-        Users.create({
+        Administradores.create({
             first_name: first_name,
             password: hash
         });
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
-    const user = await Users.findOne({
+    const user = await Administradores.findOne({
         where: { username: username },
     });
 

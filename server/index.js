@@ -8,8 +8,12 @@ app.use(cors());
 const db = require("./models");
 
 // ---- RUTEO DE APIS ----
-const usuarioRouter = require("./routes/Usuarios");
-app.use("/usuarios", usuarioRouter);
+// const administradoresRouter = require("./routes/Administradores");
+// app.use("/administradores", administradoresRouter);
+const encargadosRouter = require("./routes/Encargados");
+app.use("/encargados", encargadosRouter);
+const divisionesRouter = require("./routes/Divisiones");
+app.use("/divisiones", divisionesRouter);
 
 
 // ---- PUERTO DEL SERVIDOR ----

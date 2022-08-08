@@ -35,10 +35,6 @@ export const Login = () => {
     contrasena: Yup.string().required(),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
   // TODO Verificar ortografía
   return (
     <Flex align="center" justify="center" h="100vh">

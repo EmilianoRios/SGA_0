@@ -9,7 +9,7 @@ export const useAuth = () => {
 };
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(true);
 
   // TODO LogIn
 
