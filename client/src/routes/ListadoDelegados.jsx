@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Link as ReactRouter, useParams } from "react-router-dom";
 
+// ----- HOST CONTEXT -----
+import { useHost } from "../context/HostProvider";
+
 // ---- AXIOS ----
 import axios from "axios";
 
@@ -19,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 
 export const ListadoDelegados = () => {
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 	/**
 	 * Parametros de la url
 	 */
@@ -44,7 +48,7 @@ export const ListadoDelegados = () => {
 
 	const queryDelegados = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/delegados/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/delegados/todos`
 		);
 		setDataDelegados(resp.data);
 	};

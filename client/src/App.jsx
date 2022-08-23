@@ -1,3 +1,5 @@
+// ----- HOST CONTEXT -----
+
 // ---- COMPONENTS ----
 import { Barrios } from "./components/Barrios";
 import { Circuitos } from "./components/Circuitos";

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER-HOOKS ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
@@ -34,7 +35,7 @@ import {
 
 export const RegistroCoordinadores = () => {
 	const { user } = useAuth();
-
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 	/**
 	 * Parametro url
 	 */
@@ -60,10 +61,9 @@ export const RegistroCoordinadores = () => {
 	}, []);
 
 	const aliasType = "C-";
-	const routeLastId = "http://localhost:3001/encargados/coordinadores/ultimo";
-	const routeCreateManager =
-		"http://localhost:3001/encargados/coordinador/alta";
-	const routeMofifyManager = `http://localhost:3001/encargados/coordinadores/porId/${id}`;
+	const routeLastId = `${DATABASE_BASE_URL_LOCAL}encargados/coordinadores/ultimo`;
+	const routeCreateManager = `${DATABASE_BASE_URL_LOCAL}encargados/coordinador/alta`;
+	const routeModifyManager = `${DATABASE_BASE_URL_LOCAL}encargados/coordinadores/porId/${id}`;
 
 	/**
 	 * Variable de estado para mensajes de error o exito de las acciones del usuario
@@ -150,27 +150,27 @@ export const RegistroCoordinadores = () => {
 
 	const queryBarrios = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/barrios/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/barrios/todos`
 		);
 		setListBarrios(resp.data);
 	};
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/circuitos/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/circuitos/todos`
 		);
 		setListCircuitos(resp.data);
 	};
 
 	const queryLocalidades = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/localidades/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/localidades/todos`
 		);
 		setListLocalidades(resp.data);
 	};
 
 	const queryDataCoordinador = async () => {
-		const resp = await axios.get(`${routeMofifyManager}`);
+		const resp = await axios.get(`${routeModifyManager}`);
 		setDataCoordinador(resp.data);
 	};
 

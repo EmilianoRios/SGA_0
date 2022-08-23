@@ -9,22 +9,24 @@ import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
 
 // ---- USER-PROVIDER ----
+import { HostProvider } from "./context/HostProvider";
 import { UserProvider } from "./context/UserProvider";
 
 // ---- CHAKRA-UI ----
-import { ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { theme } from "./styles/theme";
-import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ChakraProvider>
-      <BrowserRouter>
-        <UserProvider>
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-          <App />
-        </UserProvider>
-      </BrowserRouter>
-    </ChakraProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<HostProvider>
+			<ChakraProvider>
+				<BrowserRouter>
+					<UserProvider>
+						<ColorModeScript initialColorMode={theme.config.initialColorMode} />
+						<App />
+					</UserProvider>
+				</BrowserRouter>
+			</ChakraProvider>
+		</HostProvider>
+	</React.StrictMode>
 );

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER-HOOKS ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
@@ -34,6 +35,7 @@ import {
 
 export const RegistroDelegados = () => {
 	const { user } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 
 	/**
 	 * Parametro url
@@ -67,7 +69,7 @@ export const RegistroDelegados = () => {
 
 	const querySubCoordinadores = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/subcoordinadores/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinadores/todos`
 		);
 		setListSubCoordinadores(resp.data);
 	};
@@ -76,9 +78,9 @@ export const RegistroDelegados = () => {
 	 *  Database routes y declaracion de constantes
 	 */
 	const aliasType = "D-";
-	const routeLastId = "http://localhost:3001/encargados/delegados/ultimo";
-	const routeCreateManager = "http://localhost:3001/encargados/delegado/alta";
-	const routeMofifyManager = `http://localhost:3001/encargados/delegados/porId/${id}`;
+	const routeLastId = `${DATABASE_BASE_URL_LOCAL}encargados/delegados/ultimo`;
+	const routeCreateManager = `${DATABASE_BASE_URL_LOCAL}encargados/delegado/alta`;
+	const routeModifyManager = `${DATABASE_BASE_URL_LOCAL}encargados/delegados/porId/${id}`;
 
 	/**
 	 * Variable de estado para mensajes de error o exito de las acciones del usuario
@@ -167,27 +169,27 @@ export const RegistroDelegados = () => {
 
 	const queryBarrios = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/barrios/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/barrios/todos`
 		);
 		setListBarrios(resp.data);
 	};
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/circuitos/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/circuitos/todos`
 		);
 		setListCircuitos(resp.data);
 	};
 
 	const queryLocalidades = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/localidades/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/localidades/todos`
 		);
 		setListLocalidades(resp.data);
 	};
 
 	const queryDataDelegado = async () => {
-		const resp = await axios.get(`${routeMofifyManager}`);
+		const resp = await axios.get(`${routeModifyManager}`);
 		setDataDelegado(resp.data);
 	};
 

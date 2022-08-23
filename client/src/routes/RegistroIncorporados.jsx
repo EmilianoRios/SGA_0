@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER-HOOKS ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
@@ -34,6 +35,7 @@ import {
 
 export const RegistroIncorporados = () => {
 	const { user } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 
 	/**
 	 * Parametro url
@@ -67,7 +69,7 @@ export const RegistroIncorporados = () => {
 
 	const queryDelegados = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/delegados/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/delegados/todos`
 		);
 		setListDelegados(resp.data);
 	};
@@ -76,10 +78,9 @@ export const RegistroIncorporados = () => {
 	 *  Database routes y declaracion de constantes
 	 */
 	const aliasType = "I-";
-	const routeLastId = "http://localhost:3001/encargados/incorporados/ultimo";
-	const routeCreateManager =
-		"http://localhost:3001/encargados/incorporado/alta";
-	const routeMofifyManager = `http://localhost:3001/encargados/incorporados/porId/${id}`;
+	const routeLastId = `${DATABASE_BASE_URL_LOCAL}encargados/incorporados/ultimo`;
+	const routeCreateManager = `${DATABASE_BASE_URL_LOCAL}encargados/incorporado/alta`;
+	const routeModifyManager = `${DATABASE_BASE_URL_LOCAL}encargados/incorporados/porId/${id}`;
 	/**
 	 * Variable de estado para mensajes de error o exito de las acciones del usuario
 	 */
@@ -167,27 +168,27 @@ export const RegistroIncorporados = () => {
 
 	const queryBarrios = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/barrios/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/barrios/todos`
 		);
 		setListBarrios(resp.data);
 	};
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/circuitos/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/circuitos/todos`
 		);
 		setListCircuitos(resp.data);
 	};
 
 	const queryLocalidades = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/localidades/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/localidades/todos`
 		);
 		setListLocalidades(resp.data);
 	};
 
 	const queryDataIncorporado = async () => {
-		const resp = await axios.get(`${routeMofifyManager}`);
+		const resp = await axios.get(`${routeModifyManager}`);
 		setDataIncorporado(resp.data);
 	};
 

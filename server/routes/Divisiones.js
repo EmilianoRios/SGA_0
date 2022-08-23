@@ -58,5 +58,29 @@ router.get("/localidad/porid/:id", async (req, res) => {
     res.json(delegado);
 });
 
+// ---- Update Divisiones -----
+
+router.put("/barrio/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const barrio = req.body;
+    const coordinador = await Barrios.update(barrio, { where: { id: id } });
+    res.json(coordinador);
+});
+
+router.put("/circuito/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const circuito = req.body.circuito;
+    const subcoordinador = await Circuitos.update({ circuito: circuito }, { where: { id: id } });
+    res.json(subcoordinador);
+});
+
+router.put("/localidad/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const localidad = req.body.localidad;
+    const delegado = await Localidades.update({ localidad: localidad }, { where: { id: id } });
+    res.json(delegado);
+});
+
+
 
 module.exports = router;

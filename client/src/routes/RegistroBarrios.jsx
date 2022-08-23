@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+// ----- HOST CONTEXT -----
+import { useHost } from "../context/HostProvider";
+
 // ---- AUTH-PROVIDER ----
 import { useAuth } from "../context/UserProvider";
 
@@ -34,6 +37,7 @@ import {
 
 export const RegistroBarrios = () => {
 	const { user } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 
 	/**
 	 * Parametros de la url
@@ -46,9 +50,11 @@ export const RegistroBarrios = () => {
 	 */
 	const [dataBarrio, setDataBarrio] = useState();
 
-	const [alertMessaje, setAlertMessaje] = useState();
+	/**
+	 *  Declaracion de variable de estado para alerta de mensajes
+	 */
 
-	const routeMofifyManager = `http://localhost:3001/divisiones/barrio/porid/${id}`;
+	const [alertMessaje, setAlertMessaje] = useState();
 
 	const [listCircuitos, setListCircuitos] = useState([]);
 
@@ -63,8 +69,10 @@ export const RegistroBarrios = () => {
 	 * Funcion que permite la consulta a la base de datos del barrio en caso de modificacion para su autocompletado en el formulario
 	 */
 
+	const routeModifyManager = `${DATABASE_BASE_URL_LOCAL}divisiones/barrio/porid/${id}`;
+
 	const queryDataBarrio = async () => {
-		const resp = await axios.get(`${routeMofifyManager}`);
+		const resp = await axios.get(`${routeModifyManager}`);
 		setDataBarrio(resp.data);
 	};
 
@@ -74,7 +82,7 @@ export const RegistroBarrios = () => {
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/circuitos/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/circuitos/todos`
 		);
 		setListCircuitos(resp.data);
 	};
@@ -101,7 +109,10 @@ export const RegistroBarrios = () => {
 					onSubmit={(values, actions) => {
 						if (!id) {
 							axios
-								.post(`http://localhost:3001/divisiones/barrio/alta`, values)
+								.post(
+									`${DATABASE_BASE_URL_LOCAL}divisiones/barrio/alta`,
+									values
+								)
 								.then((response) => {
 									setAlertMessaje({
 										type: "success",
@@ -112,11 +123,29 @@ export const RegistroBarrios = () => {
 								.catch((err) => {
 									setAlertMessaje({
 										type: "error",
-										messaje: "Ocurrio un error",
+										messaje: "Ocurrio un error al registrar",
 									});
 								});
 						} else {
 							// alert(JSON.stringify(values, null, 2));
+							axios
+								.put(
+									`${DATABASE_BASE_URL_LOCAL}divisiones/barrio/actualizar/porid/${id}`,
+									values
+								)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Actualizado exitosamente",
+									});
+									actions.resetForm();
+								})
+								.catch((err) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error al actualizar",
+									});
+								});
 						}
 					}}
 				>
@@ -182,7 +211,7 @@ export const RegistroBarrios = () => {
 								<FormErrorMessage>{formik.errors.CircuitoId}</FormErrorMessage>
 							</FormControl>
 							<Button type="submit" colorScheme="green" width="full">
-								Registrar
+								{id ? "Actualizar" : "Registrar"}
 							</Button>
 						</VStack>
 					)}

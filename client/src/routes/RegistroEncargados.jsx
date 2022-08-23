@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER-HOOKS ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
@@ -34,6 +35,7 @@ import {
 
 export const Registration = () => {
 	const { user } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 
 	/**
 	 * Parametro url
@@ -67,21 +69,21 @@ export const Registration = () => {
 
 	const queryCoordinadores = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/coordinadores/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/coordinadores/todos`
 		);
 		setListCoordinadores(resp.data);
 	};
 
 	const querySubCoordinadores = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/subcoordinadores/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinadores/todos`
 		);
 		setListSubCoordinadores(resp.data);
 	};
 
 	const queryDelegados = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/encargados/delegados/todos`
+			`${DATABASE_BASE_URL_LOCAL}encargados/delegados/todos`
 		);
 		setListDelegados(resp.data);
 	};
@@ -191,21 +193,21 @@ export const Registration = () => {
 
 	const queryBarrios = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/barrios/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/barrios/todos`
 		);
 		setListBarrios(resp.data);
 	};
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/circuitos/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/circuitos/todos`
 		);
 		setListCircuitos(resp.data);
 	};
 
 	const queryLocalidades = async () => {
 		const resp = await axios.get(
-			`http://localhost:3001/divisiones/localidades/todos`
+			`${DATABASE_BASE_URL_LOCAL}divisiones/localidades/todos`
 		);
 		setListLocalidades(resp.data);
 	};
@@ -218,22 +220,22 @@ export const Registration = () => {
 		try {
 			if (encargado == "coordinadores") {
 				const resp = await axios.get(
-					`http://localhost:3001/encargados/coordinadores/ultimo`
+					`${DATABASE_BASE_URL_LOCAL}encargados/coordinadores/ultimo`
 				);
 				return resp;
 			} else if (encargado == "subcoordinadores") {
 				const resp = await axios.get(
-					`http://localhost:3001/encargados/subcoordinadores/ultimo`
+					`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinadores/ultimo`
 				);
 				return resp;
 			} else if (encargado == "delegados") {
 				const resp = await axios.get(
-					`http://localhost:3001/encargados/delegados/ultimo`
+					`${DATABASE_BASE_URL_LOCAL}encargados/delegados/ultimo`
 				);
 				return resp;
 			} else if (encargado == "incorporados") {
 				const resp = await axios.get(
-					`http://localhost:3001/encargados/incorporados/ultimo`
+					`${DATABASE_BASE_URL_LOCAL}encargados/incorporados/ultimo`
 				);
 				return resp;
 			}
@@ -245,7 +247,7 @@ export const Registration = () => {
 	function toRegister(data) {
 		if (encargado == "coordinadores") {
 			axios
-				.post(`http://localhost:3001/encargados/coordinador/alta`, data)
+				.post(`${DATABASE_BASE_URL_LOCAL}encargados/coordinador/alta`, data)
 				.then((response) => {
 					setAlertMessaje({
 						type: "success",
@@ -260,7 +262,7 @@ export const Registration = () => {
 				});
 		} else if (encargado == "subcoordinadores") {
 			axios
-				.post(`http://localhost:3001/encargados/subcoordinador/alta`, data)
+				.post(`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinador/alta`, data)
 				.then((response) => {
 					setAlertMessaje({
 						type: "success",
@@ -275,7 +277,7 @@ export const Registration = () => {
 				});
 		} else if (encargado == "delegados") {
 			axios
-				.post(`http://localhost:3001/encargados/delegado/alta`, data)
+				.post(`${DATABASE_BASE_URL_LOCAL}encargados/delegado/alta`, data)
 				.then((response) => {
 					setAlertMessaje({
 						type: "success",
@@ -290,7 +292,7 @@ export const Registration = () => {
 				});
 		} else if (encargado == "incorporados") {
 			axios
-				.post(`http://localhost:3001/encargados/incorporado/alta`, data)
+				.post(`${DATABASE_BASE_URL_LOCAL}encargados/incorporado/alta`, data)
 				.then((response) => {
 					setAlertMessaje({
 						type: "success",

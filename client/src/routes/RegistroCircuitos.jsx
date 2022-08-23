@@ -1,7 +1,9 @@
 // ---- REACT ----
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
@@ -32,7 +34,41 @@ import {
 
 export const RegistroCircuitos = () => {
 	const { user } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
+
+	/**
+	 * Parametros de la url
+	 */
+
+	const { id } = useParams();
+
+	/**
+	 *  Declaracion de variable de estado para datos del circuito en caso de modificacion
+	 */
+	const [dataCircuito, setDataCircuito] = useState();
+
+	/**
+	 *  Declaracion de variable de estado para alerta de mensajes
+	 */
+
 	const [alertMessaje, setAlertMessaje] = useState();
+
+	useEffect(() => {
+		if (id) {
+			queryDataCircuito();
+		}
+	}, []);
+
+	/**
+	 * Funcion que permite la consulta a la base de datos del barrio en caso de modificacion para su autocompletado en el formulario
+	 */
+
+	const routeModifyManager = `${DATABASE_BASE_URL_LOCAL}divisiones/circuito/porid/${id}`;
+
+	const queryDataCircuito = async () => {
+		const resp = await axios.get(`${routeModifyManager}`);
+		setDataCircuito(resp.data);
+	};
 
 	const initialValues = {
 		circuito: "",
@@ -50,22 +86,49 @@ export const RegistroCircuitos = () => {
 		<Flex align="center" justify="center" h="auto">
 			<Box rounded="md" p={6} w="full">
 				<Formik
-					initialValues={initialValues}
+					initialValues={dataCircuito || initialValues}
 					validationSchema={validationSchema}
+					enableReinitialize
 					onSubmit={(values, actions) => {
-						axios
-							.post(`http://localhost:3001/divisiones/circuito/alta`, values)
-							.then((response) => {
-								setAlertMessaje({
-									type: "success",
-									messaje: "Registrado exitosamente",
+						if (!id) {
+							axios
+								.post(
+									`${DATABASE_BASE_URL_LOCAL}divisiones/circuito/alta`,
+									values
+								)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Registrado exitosamente",
+									});
+								})
+								.catch((err) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error",
+									});
 								});
-							})
-							.catch((err) => {
-								setAlertMessaje({ type: "error", messaje: "Ocurrio un error" });
-							});
-						// alert(JSON.stringify(values, null, 2));
-						actions.resetForm();
+						} else {
+							// alert(JSON.stringify(values, null, 2));
+							axios
+								.put(
+									`${DATABASE_BASE_URL_LOCAL}divisiones/circuito/actualizar/porid/${id}`,
+									values
+								)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Actualizado exitosamente",
+									});
+									actions.resetForm();
+								})
+								.catch((err) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error al actualizar",
+									});
+								});
+						}
 					}}
 				>
 					{(formik) => (
@@ -103,7 +166,7 @@ export const RegistroCircuitos = () => {
 								<FormErrorMessage>{formik.errors.circuito}</FormErrorMessage>
 							</FormControl>
 							<Button type="submit" colorScheme="green" width="full">
-								Registrar
+								{id ? "Actualizar" : "Registrar"}
 							</Button>
 						</VStack>
 					)}
