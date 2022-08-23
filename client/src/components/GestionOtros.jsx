@@ -69,11 +69,6 @@ export const GestionOtros = () => {
 							Listado
 						</Button>
 					</ReactRouter>
-					<ReactRouter to={"/otros/modificar/" + division}>
-						<Button colorScheme="blue" width="full">
-							Modificar
-						</Button>
-					</ReactRouter>
 					<ReactRouter to={"/" + division}>
 						<Button colorScheme="teal" width="full">
 							Volver

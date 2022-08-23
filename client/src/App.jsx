@@ -8,6 +8,7 @@ import { GestionOtros } from "./components/GestionOtros";
 import { Incorporados } from "./components/Incorporados";
 import { Home } from "./components/Inicio";
 import { Listado } from "./components/Listado";
+import { ListadoOtros } from "./components/ListadoOtros";
 import { Localidades } from "./components/Localidades";
 import { Navbar } from "./components/Navbar";
 import { Otros } from "./components/OtrosMenu";
@@ -133,6 +134,22 @@ export function App() {
 						element={
 							<RequireAuth>
 								<Listado />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path="/otros/listado/:division"
+						element={
+							<RequireAuth>
+								<ListadoOtros />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path="/otros/modificar/:division/:id"
+						element={
+							<RequireAuth>
+								<GestionOtros />
 							</RequireAuth>
 						}
 					/>

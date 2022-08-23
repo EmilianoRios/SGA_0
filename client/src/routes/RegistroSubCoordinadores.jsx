@@ -235,6 +235,7 @@ export const RegistroSubCoordinadores = () => {
 												messaje: "Registrado exitosamente",
 											});
 											actions.resetForm();
+											values.alias = aliasType;
 										})
 										.catch((err) => {
 											setAlertMessaje({

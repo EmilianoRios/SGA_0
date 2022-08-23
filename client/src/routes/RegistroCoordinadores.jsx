@@ -199,7 +199,6 @@ export const RegistroCoordinadores = () => {
 					enableReinitialize
 					onSubmit={(values, actions) => {
 						if (!id) {
-							console.log("hika");
 							let edad = getAge(values.fecha_nacimiento);
 							values.edad = edad;
 							getLastId()
@@ -217,6 +216,7 @@ export const RegistroCoordinadores = () => {
 												messaje: "Registrado exitosamente",
 											});
 											actions.resetForm();
+											values.alias = aliasType;
 										})
 										.catch((err) => {
 											setAlertMessaje({

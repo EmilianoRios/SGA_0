@@ -54,19 +54,19 @@ router.get("/coordinadores/porid/:id", async (req, res) => {
     res.json(coordinador);
 });
 
-router.get("/subcoordinadores/porId/:id", async (req, res) => {
+router.get("/subcoordinadores/porid/:id", async (req, res) => {
     const id = req.params.id;
     const subcoordinador = await SubCoordinadores.findByPk(id);
     res.json(subcoordinador);
 });
 
-router.get("/delegados/porId/:id", async (req, res) => {
+router.get("/delegados/porid/:id", async (req, res) => {
     const id = req.params.id;
     const delegado = await Delegados.findByPk(id);
     res.json(delegado);
 });
 
-router.get("/incorporados/porId/:id", async (req, res) => {
+router.get("/incorporados/porid/:id", async (req, res) => {
     const id = req.params.id;
     const incorporado = await Incorporados.findByPk(id);
     res.json(incorporado);

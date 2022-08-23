@@ -1,5 +1,6 @@
 // ---- REACT-REACT-ROUTER ----
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 // ---- AUTH-PROVIDER ----
 import { useAuth } from "../context/UserProvider";
@@ -33,12 +34,43 @@ import {
 
 export const RegistroBarrios = () => {
 	const { user } = useAuth();
+
+	/**
+	 * Parametros de la url
+	 */
+
+	const { id } = useParams();
+
+	/**
+	 *  Declaracion de variable de estado para datos del barrio en caso de modificacion
+	 */
+	const [dataBarrio, setDataBarrio] = useState();
+
 	const [alertMessaje, setAlertMessaje] = useState();
+
+	const routeMofifyManager = `http://localhost:3001/divisiones/barrio/porid/${id}`;
+
 	const [listCircuitos, setListCircuitos] = useState([]);
 
 	useEffect(() => {
 		queryCircuitos();
+		if (id) {
+			queryDataBarrio();
+		}
 	}, []);
+
+	/**
+	 * Funcion que permite la consulta a la base de datos del barrio en caso de modificacion para su autocompletado en el formulario
+	 */
+
+	const queryDataBarrio = async () => {
+		const resp = await axios.get(`${routeMofifyManager}`);
+		setDataBarrio(resp.data);
+	};
+
+	/**
+	 * Funcion que permite traer todos los circuitos para la etiqueta option del formulario de registro de barrios
+	 */
 
 	const queryCircuitos = async () => {
 		const resp = await axios.get(
@@ -63,22 +95,29 @@ export const RegistroBarrios = () => {
 		<Flex align="center" justify="center" h="auto">
 			<Box rounded="md" p={6} w="full">
 				<Formik
-					initialValues={initialValues}
+					initialValues={dataBarrio || initialValues}
 					validationSchema={validationSchema}
+					enableReinitialize
 					onSubmit={(values, actions) => {
-						axios
-							.post(`http://localhost:3001/divisiones/barrio/alta`, values)
-							.then((response) => {
-								setAlertMessaje({
-									type: "success",
-									messaje: "Registrado exitosamente",
+						if (!id) {
+							axios
+								.post(`http://localhost:3001/divisiones/barrio/alta`, values)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Registrado exitosamente",
+									});
+									actions.resetForm();
+								})
+								.catch((err) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error",
+									});
 								});
-								actions.resetForm();
-							})
-							.catch((err) => {
-								setAlertMessaje({ type: "error", messaje: "Ocurrio un error" });
-							});
-						// alert(JSON.stringify(values, null, 2));
+						} else {
+							// alert(JSON.stringify(values, null, 2));
+						}
 					}}
 				>
 					{(formik) => (

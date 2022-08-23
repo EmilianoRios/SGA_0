@@ -558,7 +558,7 @@ export const RegistroIncorporados = () => {
 								}
 							>
 								<FormLabel>
-									SubCoordinador
+									Delegado
 									<Text as="em" color="tomato">
 										*
 									</Text>
@@ -568,7 +568,7 @@ export const RegistroIncorporados = () => {
 									id="DelegadoId"
 									name="DelegadoId"
 									type="string"
-									placeholder="Seleccione un SubCoordinador"
+									placeholder="Seleccione un Delegado"
 									variant="flushed"
 								>
 									{listDelegados.map((values) => (

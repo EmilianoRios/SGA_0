@@ -233,6 +233,7 @@ export const RegistroDelegados = () => {
 												messaje: "Registrado exitosamente",
 											});
 											actions.resetForm();
+											values.alias = aliasType;
 										})
 										.catch((err) => {
 											setAlertMessaje({

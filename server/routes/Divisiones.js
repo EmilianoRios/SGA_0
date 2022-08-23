@@ -39,4 +39,24 @@ router.post("/localidad/alta", async (req, res) => {
     res.json(localidad);
 })
 
+// ----- Divisiones por id -----
+router.get("/barrio/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const coordinador = await Barrios.findByPk(id);
+    res.json(coordinador);
+});
+
+router.get("/circuito/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const subcoordinador = await Circuitos.findByPk(id);
+    res.json(subcoordinador);
+});
+
+router.get("/localidad/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const delegado = await Localidades.findByPk(id);
+    res.json(delegado);
+});
+
+
 module.exports = router;

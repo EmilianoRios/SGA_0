@@ -20,12 +20,12 @@ export const Localidades = () => {
 				<Stack direction="column" spacing={4}>
 					<ReactRouter to="/otros/gestion/localidades">
 						<Button colorScheme="blue" width="full">
-							Alta y Modificación de Localidades
+							Alta de Localidades
 						</Button>
 					</ReactRouter>
-					<ReactRouter to="/listadootros/localidades">
+					<ReactRouter to="/otros/listado/localidades">
 						<Button colorScheme="blue" width="full">
-							Listado de Localidades
+							Listado y Modificación de Localidades
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/otros">
