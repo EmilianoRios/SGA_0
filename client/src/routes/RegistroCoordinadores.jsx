@@ -98,10 +98,7 @@ export const RegistroCoordinadores = () => {
 
 	const validationSchema = Yup.object().shape({
 		alias: Yup.string(),
-		documento_dni: Yup.string()
-			.required("Ingrese un DNI")
-			.min(8, "El DNI debe contener 8 dígitos")
-			.max(8, "El DNI debe contener máximo 8 dígitos"),
+		documento_dni: Yup.number().required("Ingrese un DNI"),
 		apellidos: Yup.string()
 			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Apellido/s")
 			.required("Ingrese un Apellido"),
@@ -216,7 +213,6 @@ export const RegistroCoordinadores = () => {
 												messaje: "Registrado exitosamente",
 											});
 											actions.resetForm();
-											values.alias = aliasType;
 										})
 										.catch((err) => {
 											setAlertMessaje({
@@ -234,7 +230,25 @@ export const RegistroCoordinadores = () => {
 									values.alias = aliasType;
 								});
 						} else {
-							alert(JSON.stringify(values, null, 2));
+							// alert(JSON.stringify(values, null, 2));
+							axios
+								.put(
+									`${DATABASE_BASE_URL_LOCAL}encargados/coordinador/actualizar/porid/${id}`,
+									values
+								)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Actualizado exitosamente",
+									});
+									actions.resetForm();
+								})
+								.catch((err) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error al actualizar",
+									});
+								});
 						}
 					}}
 				>
@@ -537,7 +551,7 @@ export const RegistroCoordinadores = () => {
 								</FormErrorMessage>
 							</FormControl>
 							<Button type="submit" colorScheme="green" width="full">
-								Registrar
+								{id ? "Actualizar" : "Registrar"}
 							</Button>
 						</VStack>
 					)}

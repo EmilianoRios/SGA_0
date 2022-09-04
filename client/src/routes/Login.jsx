@@ -1,97 +1,113 @@
+// ---- REACT ----
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 // ---- AUTH-PROVIDER ----
+import { useHost } from "../context/HostProvider";
 import { useAuth } from "../context/UserProvider";
 
 // ---- FORMIK ----
-import { Formik, Field } from "formik";
+import { Field, Formik } from "formik";
 
 // ---- YUP-FORMVALIDATION ----
 import * as Yup from "yup";
 
+// ---- AXIOS ----
+import axios from "axios";
+
 // ---- CHAKRA-UI ----
 import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  VStack,
-  Select,
+	Box,
+	Button,
+	Flex,
+	FormControl,
+	FormErrorMessage,
+	FormLabel,
+	Input,
+	VStack,
 } from "@chakra-ui/react";
 
 export const Login = () => {
-  const { user } = useAuth();
+	const { setUser } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
+	let navigateTo = useNavigate();
 
-  const initialValues = {
-    documento_dni: "",
-    contrasena: "",
-  };
+	const initialValues = {
+		usuario: "",
+		contrasena: "",
+	};
 
-  // TODO Traducir validaciones/mensajes personalizados
-  const validationSchema = Yup.object().shape({
-    documento_dni: Yup.number().required("Ingrese su DNI"),
-    contrasena: Yup.string().required(),
-  });
+	const validationSchema = Yup.object().shape({
+		usuario: Yup.string().required("Ingrese su Usuario"),
+		contrasena: Yup.string().required("Ingrese su Contrasena"),
+	});
 
-  // TODO Verificar ortografía
-  return (
-    <Flex align="center" justify="center" h="100vh">
-      <Box rounded="md" p={6} bg="blackAlpha.300">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            alert(JSON.stringify(values, null, 2));
-          }}
-        >
-          {(formik) => (
-            <VStack
-              as="form"
-              spacing={4}
-              align="flex-start"
-              onSubmit={formik.handleSubmit}
-            >
-              <FormControl
-                isInvalid={
-                  formik.errors.documento_dni && formik.touched.documento_dni
-                }
-              >
-                <FormLabel>Documento DNI</FormLabel>
-                <Field
-                  as={Input}
-                  id="documento_dni"
-                  name="documento_dni"
-                  type="number"
-                  variant="flushed"
-                />
-                <FormErrorMessage>
-                  {formik.errors.documento_dni}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl
-                isInvalid={
-                  formik.errors.contrasena && formik.touched.contrasena
-                }
-              >
-                <FormLabel>Contraseña</FormLabel>
-                <Field
-                  as={Input}
-                  id="contrasena"
-                  name="contrasena"
-                  type="password"
-                  variant="flushed"
-                />
-              </FormControl>
-              <FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
-              <Button type="submit" colorScheme="blue" width="full">
-                Iniciar Sesión
-              </Button>
-            </VStack>
-          )}
-        </Formik>
-      </Box>
-    </Flex>
-  );
+	return (
+		<Flex align="center" justify="center" h="100vh">
+			<Box rounded="md" p={6} bg="blackAlpha.300">
+				<Formik
+					initialValues={initialValues}
+					validationSchema={validationSchema}
+					onSubmit={(values, actions) => {
+						axios
+							.post(`${DATABASE_BASE_URL_LOCAL}admin/login`, values)
+							.then((response) => {
+								if (response.data.error) {
+									alert(response.data.error);
+								} else {
+									localStorage.setItem("accessToken", response.data.token);
+									setUser({
+										usuario: response.data.usuario,
+										id: response.data.id,
+										status: true,
+									});
+								}
+								navigateTo("/home");
+							});
+					}}
+				>
+					{(formik) => (
+						<VStack
+							as="form"
+							spacing={4}
+							align="flex-start"
+							onSubmit={formik.handleSubmit}
+						>
+							<FormControl
+								isInvalid={formik.errors.usuario && formik.touched.usuario}
+							>
+								<FormLabel>Usuario: </FormLabel>
+								<Field
+									as={Input}
+									id="usuario"
+									name="usuario"
+									type="string"
+									variant="flushed"
+								/>
+								<FormErrorMessage>{formik.errors.usuario}</FormErrorMessage>
+							</FormControl>
+							<FormControl
+								isInvalid={
+									formik.errors.contrasena && formik.touched.contrasena
+								}
+							>
+								<FormLabel>Contraseña</FormLabel>
+								<Field
+									as={Input}
+									id="contrasena"
+									name="contrasena"
+									type="password"
+									variant="flushed"
+								/>
+							</FormControl>
+							<FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
+							<Button type="submit" colorScheme="blue" width="full">
+								Iniciar Sesión
+							</Button>
+						</VStack>
+					)}
+				</Formik>
+			</Box>
+		</Flex>
+	);
 };

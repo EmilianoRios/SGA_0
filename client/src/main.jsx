@@ -19,14 +19,14 @@ import { theme } from "./styles/theme";
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<HostProvider>
-			<ChakraProvider>
-				<BrowserRouter>
-					<UserProvider>
+			<UserProvider>
+				<ChakraProvider>
+					<BrowserRouter>
 						<ColorModeScript initialColorMode={theme.config.initialColorMode} />
 						<App />
-					</UserProvider>
-				</BrowserRouter>
-			</ChakraProvider>
+					</BrowserRouter>
+				</ChakraProvider>
+			</UserProvider>
 		</HostProvider>
 	</React.StrictMode>
 );

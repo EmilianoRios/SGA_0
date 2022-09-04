@@ -19,10 +19,13 @@ import {
 	Th,
 	Thead,
 	Tr,
+	useToast,
 } from "@chakra-ui/react";
 
 export const ListadoCoordinadores = () => {
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
+	const toast = useToast();
+
 	/**
 	 * Parametros de la url
 	 */
@@ -53,6 +56,37 @@ export const ListadoCoordinadores = () => {
 		setDataCoordiandores(resp.data);
 	};
 
+	const queryDeleteCoordinador = (coordinadorId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}encargados/coordinador/baja/porid/${coordinadorId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Coordinador eliminado",
+					description: "A eliminado exitosamente al coordinador seleccionado",
+					status: "success",
+				});
+			})
+			.catch((error) => {
+				setAlertMessaje({
+					title: "Coordinador no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el coordinador seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -79,10 +113,19 @@ export const ListadoCoordinadores = () => {
 									<ReactRouter
 										to={"/modificar/" + encargado + "/" + coordinador.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteCoordinador(coordinador.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

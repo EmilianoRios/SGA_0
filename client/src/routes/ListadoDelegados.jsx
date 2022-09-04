@@ -53,6 +53,37 @@ export const ListadoDelegados = () => {
 		setDataDelegados(resp.data);
 	};
 
+	const queryDeleteDelegado = (delegadoId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}encargados/delegado/baja/porid/${delegadoId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Delegado eliminado",
+					description: "A eliminado exitosamente al delegado seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Delegado no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el delegado seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -79,10 +110,19 @@ export const ListadoDelegados = () => {
 									<ReactRouter
 										to={"/modificar/" + encargado + "/" + delegado.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteDelegado(delegado.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

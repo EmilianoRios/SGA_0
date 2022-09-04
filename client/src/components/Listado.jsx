@@ -4,7 +4,7 @@ import React from "react";
 // ---- AUTH-PROVIDER ----
 
 // ---- REACT-ROUTES ----
-import { Link as ReactRouter, useParams } from "react-router-dom";
+import { Link as ReactRouter, Navigate, useParams } from "react-router-dom";
 
 // ---- CHAKRA-UI ----
 import { Button, Grid, GridItem, Stack, Text } from "@chakra-ui/react";

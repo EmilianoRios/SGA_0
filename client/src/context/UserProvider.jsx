@@ -9,15 +9,11 @@ export const useAuth = () => {
 };
 
 export function UserProvider({ children }) {
-	const [user, setUser] = useState(true);
-
-	// TODO LogIn
-
-	// TODO LogOut
-
-	// TODO Register
+	const [user, setUser] = useState({ usuario: "", id: 0, status: false });
 
 	return (
-		<UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+		<UserContext.Provider value={{ user, setUser }}>
+			{children}
+		</UserContext.Provider>
 	);
 }

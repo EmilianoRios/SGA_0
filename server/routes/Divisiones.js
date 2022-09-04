@@ -81,6 +81,21 @@ router.put("/localidad/actualizar/porid/:id", async (req, res) => {
     res.json(delegado);
 });
 
+// ---- Eliminacion de Divisiones -------
 
+router.delete("/barrio/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Barrios.destroy({ where: { id: id } });
+})
+
+router.delete("/circuito/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Circuitos.destroy({ where: { id: id } });
+})
+
+router.delete("/localidad/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Localidades.destroy({ where: { id: id } });
+})
 
 module.exports = router;

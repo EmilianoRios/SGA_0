@@ -53,6 +53,37 @@ export const ListadoBarrios = () => {
 		setDataBarrios(resp.data);
 	};
 
+	const queryDeleteBarrio = (barrioId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}divisiones/barrio/baja/porid/${barrioId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Barrio eliminado",
+					description: "A eliminado exitosamente al barrio seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Barrio no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el barrio seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -75,10 +106,19 @@ export const ListadoBarrios = () => {
 									<ReactRouter
 										to={"/otros/modificar/" + division + "/" + barrio.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteBarrio(barrio.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

@@ -8,8 +8,8 @@ app.use(cors());
 const db = require("./models");
 
 // ---- RUTEO DE APIS ----
-// const administradoresRouter = require("./routes/Administradores");
-// app.use("/administradores", administradoresRouter);
+const administradoresRouter = require("./routes/Administradores");
+app.use("/admin", administradoresRouter);
 const encargadosRouter = require("./routes/Encargados");
 app.use("/encargados", encargadosRouter);
 const divisionesRouter = require("./routes/Divisiones");

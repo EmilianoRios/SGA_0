@@ -140,10 +140,7 @@ export const Registration = () => {
 
 	const validationSchema = Yup.object().shape({
 		alias: Yup.string(),
-		documento_dni: Yup.string()
-			.required("Ingrese un DNI")
-			.min(8, "El DNI debe contener 8 dígitos")
-			.max(8, "El DNI debe contener máximo 8 dígitos"),
+		documento_dni: Yup.string(),
 		apellidos: Yup.string()
 			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Apellido/s")
 			.required("Ingrese un Apellido"),
@@ -742,7 +739,7 @@ export const Registration = () => {
 								""
 							)}
 							<Button type="submit" colorScheme="green" width="full">
-								Registrar
+								{id ? "Actualizar" : "Registrar"}
 							</Button>
 						</VStack>
 					)}

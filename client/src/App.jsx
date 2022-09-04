@@ -1,4 +1,5 @@
-// ----- HOST CONTEXT -----
+// ----- REACT -----
+import React, { useEffect } from "react";
 
 // ---- COMPONENTS ----
 import { Barrios } from "./components/Barrios";
@@ -27,8 +28,37 @@ import { Container } from "@chakra-ui/react";
 
 // ---- ROUTES ----
 import { Login } from "./routes/Login";
+import { RegistroAdmin } from "./routes/RegistroAdmin";
+
+// ---- AUTH-HOST ----
+import { useHost } from "./context/HostProvider";
+import { useAuth } from "./context/UserProvider";
+
+// ---- AXIOS ----
+import axios from "axios";
 
 export function App() {
+	const { user, setUser } = useAuth();
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
+
+	useEffect(() => {
+		axios
+			.get(`${DATABASE_BASE_URL_LOCAL}admin/auth`, {
+				headers: { accessToken: localStorage.getItem("accessToken") },
+			})
+			.then((response) => {
+				if (response.data.error) {
+					setUser({ ...user, status: false });
+				} else {
+					setUser({
+						usuario: response.data.usuario,
+						id: response.data.id,
+						status: true,
+					});
+				}
+			});
+	}, []);
+
 	return (
 		<>
 			<Container maxW="container.xl">
@@ -152,6 +182,14 @@ export function App() {
 						element={
 							<RequireAuth>
 								<GestionOtros />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path="/registro/admin"
+						element={
+							<RequireAuth>
+								<RegistroAdmin />
 							</RequireAuth>
 						}
 					/>

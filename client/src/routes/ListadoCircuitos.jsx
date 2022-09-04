@@ -53,6 +53,37 @@ export const ListadoCircuitos = () => {
 		setDataCircuitos(resp.data);
 	};
 
+	const queryDeleteCircuito = (circuitoId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}divisiones/circuito/baja/porid/${circuitoId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Circuito eliminado",
+					description: "A eliminado exitosamente al circuito seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Circuito no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el circuito seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -75,10 +106,19 @@ export const ListadoCircuitos = () => {
 									<ReactRouter
 										to={"/otros/modificar/" + division + "/" + circuito.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteCircuito(circuito.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

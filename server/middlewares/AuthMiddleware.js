@@ -1,12 +1,12 @@
-const verify  = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 
-const validateToken = (req, res ,next ) => {
-    const accesToken = req.header("accesToken");
+const validateToken = (req, res, next) => {
+    const accessToken = req.header("accessToken");
 
-    if (!accesToken) return res.json({ error: "Acceso no disponible."})
+    if (!accessToken) return res.json({ error: "Acceso no disponible." })
 
     try {
-        const validToken = verify(accesToken,"importantsecret");
+        const validToken = verify(accessToken, "importantsecret");
         req.user = validToken;
         if (validToken) {
             return next();

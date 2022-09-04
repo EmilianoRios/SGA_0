@@ -136,4 +136,56 @@ router.post("/incorporado/alta", async (req, res) => {
     res.json(incorporado);
 })
 
+// ----- Update Encargado ------
+
+router.put("/coordinador/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const coordinador = await Coordinadores.update(data, { where: { id: id } });
+    res.json(coordinador);
+});
+
+router.put("/subcoordinador/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const subcoordinador = await SubCoordinadores.update(data, { where: { id: id } });
+    res.json(subcoordinador);
+});
+
+router.put("/delegados/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const delegado = await Delegados.update(data, { where: { id: id } });
+    res.json(delegado);
+});
+
+router.put("/incorporados/actualizar/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const delegado = await Delegados.update(data, { where: { id: id } });
+    res.json(delegado);
+});
+
+// ----- Eliminacion de un encargado ------
+
+router.delete("/coordinador/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Coordinadores.destroy({ where: { id: id } });
+})
+
+router.delete("/subcoordinador/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await SubCoordinadores.destroy({ where: { id: id } });
+})
+
+router.delete("/delegado/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Delegados.destroy({ where: { id: id } });
+})
+
+router.delete("/incorporado/baja/porid/:id", async (req, res) => {
+    const id = req.params.id;
+    await Incorporados.destroy({ where: { id: id } });
+})
+
 module.exports = router;

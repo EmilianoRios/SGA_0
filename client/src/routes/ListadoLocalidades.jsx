@@ -53,6 +53,37 @@ export const ListadoLocalidades = () => {
 		setDataLocalidades(resp.data);
 	};
 
+	const queryDeleteLocalidad = (localidadId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}divisiones/localidad/baja/porid/${localidadId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Localidad eliminado",
+					description: "A eliminado exitosamente al localidad seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Localidad no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el localidad seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -75,10 +106,19 @@ export const ListadoLocalidades = () => {
 									<ReactRouter
 										to={"/otros/modificar/" + division + "/" + localidad.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteLocalidad(localidad.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

@@ -2,40 +2,45 @@ const express = require("express");
 const router = express.Router();
 const { Administradores } = require("../models");
 const bcrypt = require("bcrypt");
-const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 router.post("/", async (req, res) => {
-    const { first_name, password } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
+    const { usuario, nombres, apellidos, correo, contrasena } = req.body;
+    bcrypt.hash(contrasena, 10).then((hash) => {
         Administradores.create({
-            first_name: first_name,
-            password: hash
+            usuario: usuario,
+            nombres: nombres,
+            apellidos: apellidos,
+            correo: correo,
+            contrasena: hash
         });
         res.json("Creado correctamente.");
     });
 });
 
 router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
+    const { usuario, contrasena } = req.body;
 
     const user = await Administradores.findOne({
-        where: { username: username },
+        where: { usuario: usuario },
     });
 
-    if (!user) res.json({ error: "El usuario ingresado no existe" });
+    if (!user) res.json({ error: "Usuario o contraseña incorrectas" });
 
-    bcrypt.compare(password, user.password).then(async (match) => {
-        if (!match) res.json({ error: "Contraseña incorrecta" });
+    bcrypt.compare(contrasena, user.contrasena).then(async (match) => {
+        if (!match) res.json({ error: "Usuario o contraseña incorrectas" });
 
         const accessToken = sign(
-            { username: user.first_name, id: user.idusuario },
+            { usuario: user.usuario, id: user.id },
             "importantsecret"
         );
-        res.json({
-            token: accessToken,
-            username: username,
-            id: user.idusuario,
-        });
+        res.json({ token: accessToken, usuario: usuario, id: user.id });
     });
 });
+
+router.get('/auth', validateToken, (req, res) => {
+    res.json(req.user);
+})
+
+module.exports = router;

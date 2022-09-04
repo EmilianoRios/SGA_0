@@ -53,6 +53,37 @@ export const ListadoIncorporados = () => {
 		setDataIncorporados(resp.data);
 	};
 
+	const queryDeleteIncorporado = (incorporadoId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}encargados/incorporado/baja/porid/${incorporadoId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Incorporado eliminado",
+					description: "A eliminado exitosamente al incorporado seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Incorporado no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el incorporado seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	/**
 	 * Renderizado del la vista de la tabla
 	 */
@@ -79,10 +110,19 @@ export const ListadoIncorporados = () => {
 									<ReactRouter
 										to={"/modificar/" + encargado + "/" + incorporados.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteDelegado(delegado.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}

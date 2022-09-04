@@ -19,10 +19,13 @@ import {
 	Th,
 	Thead,
 	Tr,
+	useToast,
 } from "@chakra-ui/react";
 
 export const ListadoSubCoordinadores = () => {
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
+	const toast = useToast();
+
 	/**
 	 * Parametros de la url
 	 */
@@ -35,7 +38,7 @@ export const ListadoSubCoordinadores = () => {
 	const [dataSubCoordinadores, setDataSubCoordinadores] = useState([]);
 
 	/**
-	 * useEffect
+	 * useEffect querySubCoordinadores();
 	 */
 
 	useEffect(() => {
@@ -46,12 +49,47 @@ export const ListadoSubCoordinadores = () => {
 	 * Consultas a la base de datos
 	 */
 
-	const querySubCoordinadores = async () => {
-		const resp = await axios.get(
-			`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinadores/todos`
-		);
-		setDataSubCoordinadores(resp.data);
+	const querySubCoordinadores = () => {
+		axios
+			.get(`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinadores/todos`)
+			.then((resp) => {
+				setDataSubCoordinadores(resp.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
+
+	const queryDeleteSubCoordinador = (subCoordinadorId) => {
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
+		axios
+			.delete(
+				`${DATABASE_BASE_URL_LOCAL}encargados/subcoordinador/baja/porid/${subCoordinadorId}`
+			)
+			.then((response) => {
+				setAlertMessaje({
+					title: "Coordinador eliminado",
+					description: "A eliminado exitosamente al coordinador seleccionado",
+					status: "success",
+				});
+			})
+			.catch((err) => {
+				setAlertMessaje({
+					title: "Coordinador no eliminado",
+					description:
+						"Ha ocurrido un error al eliminar el coordinador seleccionado",
+					status: "error",
+				});
+			});
+	};
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
 
 	/**
 	 * Renderizado del la vista de la tabla
@@ -79,10 +117,19 @@ export const ListadoSubCoordinadores = () => {
 									<ReactRouter
 										to={"/modificar/" + encargado + "/" + subcoordinador.id}
 									>
-										<Button colorScheme="yellow" width="full">
+										<Button colorScheme="yellow" size="sm">
 											M
 										</Button>
 									</ReactRouter>
+									<Button
+										colorScheme="red"
+										size="sm"
+										onClick={() => {
+											queryDeleteSubCoordinador(subcoordinador.id);
+										}}
+									>
+										E
+									</Button>
 								</Td>
 							</Tr>
 						))}
