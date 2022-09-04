@@ -117,10 +117,16 @@ export const RegistroIncorporados = () => {
 		alias: Yup.string(),
 		documento_dni: Yup.number(),
 		apellidos: Yup.string()
-			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Apellido/s")
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el Apellido/s"
+			)
 			.required("Ingrese un Apellido"),
 		nombres: Yup.string()
-			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Nombre/s")
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el Nombre/s"
+			)
 			.required("Ingrese un Nombre"),
 		fecha_nacimiento: Yup.date().required("Ingrese una Fecha de Nacimiento"),
 		edad: Yup.number().integer(),

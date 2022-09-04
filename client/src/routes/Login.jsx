@@ -91,7 +91,7 @@ export const Login = () => {
 									formik.errors.contrasena && formik.touched.contrasena
 								}
 							>
-								<FormLabel>Contraseña</FormLabel>
+								<FormLabel>Contraseña: </FormLabel>
 								<Field
 									as={Input}
 									id="contrasena"

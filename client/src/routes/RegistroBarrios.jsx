@@ -94,7 +94,12 @@ export const RegistroBarrios = () => {
 
 	// TODO Traducir validaciones/mensajes personalizados
 	const validationSchema = Yup.object().shape({
-		barrio: Yup.string().required("Ingrese un Barrio"),
+		barrio: Yup.string()
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el barrio"
+			)
+			.required("Ingrese un Barrio"),
 		CircuitoId: Yup.string().required("Ingrese un Circuito"),
 	});
 

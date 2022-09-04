@@ -76,7 +76,12 @@ export const RegistroLocalidades = () => {
 
 	// TODO Traducir validaciones/mensajes personalizados
 	const validationSchema = Yup.object().shape({
-		localidad: Yup.string().required("Ingrese una Localidad"),
+		localidad: Yup.string()
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para la localidad"
+			)
+			.required("Ingrese una Localidad"),
 	});
 
 	// TODO Verificar ortografía

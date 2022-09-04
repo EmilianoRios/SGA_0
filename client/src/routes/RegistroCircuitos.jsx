@@ -78,7 +78,10 @@ export const RegistroCircuitos = () => {
 	const validationSchema = Yup.object().shape({
 		circuito: Yup.string()
 			.required("Ingrese un Circuito")
-			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Circuito"),
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el Circuito"
+			),
 	});
 
 	// TODO Verificar ortografía

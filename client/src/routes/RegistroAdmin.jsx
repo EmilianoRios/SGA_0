@@ -1,6 +1,6 @@
 // ---- REACT ----
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link as ReactRouter, useNavigate } from "react-router-dom";
 
 // ---- AUTH-PROVIDER ----
 import { useHost } from "../context/HostProvider";
@@ -43,10 +43,16 @@ export const RegistroAdmin = () => {
 	const validationSchema = Yup.object().shape({
 		usuario: Yup.string().required("Ingrese su Usuario"),
 		nombres: Yup.string()
-			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Nombre/s")
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el Nombre/s"
+			)
 			.required("Ingrese un Nombre"),
 		apellidos: Yup.string()
-			.matches(/^[aA-zZ\s]+$/, "Solo se permiten letras para el Apellido/s")
+			.matches(
+				/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+				"Solo se permiten letras para el Apellido/s"
+			)
 			.required("Ingrese un Apellido"),
 		correo: Yup.string()
 			.email("Correo no válido")
@@ -152,6 +158,11 @@ export const RegistroAdmin = () => {
 						</VStack>
 					)}
 				</Formik>
+				<ReactRouter to="/home">
+					<Button colorScheme="teal" width="full" mt="2">
+						Volver
+					</Button>
+				</ReactRouter>
 			</Box>
 		</Flex>
 	);

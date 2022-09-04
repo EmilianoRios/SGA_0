@@ -16,10 +16,10 @@
 		"timezone": "-3:00"
 	},
 	"production": {
-		"username": "root",
-		"password": "$E2438818L-",
-		"database": "sisactividades",
-		"host": "localhost",
+		"username": "b741e1be170f3a",
+		"password": "0472ab32",
+		"database": "heroku_6f6968f0e57f268",
+		"host": "us-cdbr-east-06.cleardb.net",
 		"dialect": "mysql",
 		"timezone": "-3:00"
 	}
