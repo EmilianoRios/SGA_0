@@ -9,7 +9,12 @@ export const useAuth = () => {
 };
 
 export function UserProvider({ children }) {
-	const [user, setUser] = useState({ usuario: "", id: 0, status: false });
+	const [user, setUser] = useState({
+		usuario: "",
+		rol: "",
+		id: 0,
+		status: false,
+	});
 
 	return (
 		<UserContext.Provider value={{ user, setUser }}>

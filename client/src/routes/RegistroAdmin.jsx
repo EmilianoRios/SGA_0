@@ -1,5 +1,5 @@
 // ---- REACT ----
-import React from "react";
+import React, { useState } from "react";
 import { Link as ReactRouter, useNavigate } from "react-router-dom";
 
 // ---- AUTH-PROVIDER ----
@@ -17,13 +17,19 @@ import axios from "axios";
 
 // ---- CHAKRA-UI ----
 import {
+	AlertDescription,
+	AlertIcon,
 	Box,
 	Button,
 	Flex,
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
+	Heading,
+	HStack,
 	Input,
+	Radio,
+	RadioGroup,
 	VStack,
 } from "@chakra-ui/react";
 
@@ -32,12 +38,21 @@ export const RegistroAdmin = () => {
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
 	let navigateTo = useNavigate();
 
+	const [checkedItem, setCheckedItem] = useState();
+
+	/**
+	 * Variable de estado para mensajes de error o exito de las acciones del usuario
+	 */
+
+	const [alertMessaje, setAlertMessaje] = useState();
+
 	const initialValues = {
 		usuario: "",
 		nombres: "",
 		apellidos: "",
 		correo: "",
 		contrasena: "",
+		rol: "COORD",
 	};
 
 	const validationSchema = Yup.object().shape({
@@ -56,13 +71,14 @@ export const RegistroAdmin = () => {
 			.required("Ingrese un Apellido"),
 		correo: Yup.string()
 			.email("Correo no válido")
-			.required("Ingrese su Apellido"),
-		contrasena: Yup.string().required(),
+			.required("Ingrese un correo"),
+		contrasena: Yup.string().required("Ingrese una contraseña"),
+		rol: Yup.string().required("Seleccione el rol"),
 	});
 
 	return (
 		<Flex align="center" justify="center" h="100vh">
-			<Box rounded="md" p={6} bg="blackAlpha.300">
+			<Box rounded="md" p={6} bg="blackAlpha.300" w="500px">
 				<Formik
 					initialValues={initialValues}
 					validationSchema={validationSchema}
@@ -71,7 +87,12 @@ export const RegistroAdmin = () => {
 							axios
 								.post(`${DATABASE_BASE_URL_LOCAL}admin`, values)
 								.then((response) => {
-									navigateTo("/");
+									setAlertMessaje({
+										type: "success",
+										messaje: "Registrado exitosamente",
+									});
+									actions.resetForm();
+									navigateTo("/registro/admin");
 								});
 						} else {
 							alert("Sesión no iniciada");
@@ -85,6 +106,15 @@ export const RegistroAdmin = () => {
 							align="flex-start"
 							onSubmit={formik.handleSubmit}
 						>
+							<Heading align="center">Registro</Heading>
+							{alertMessaje ? (
+								<Alert status={alertMessaje.type}>
+									<AlertIcon />
+									<AlertDescription>{alertMessaje.messaje}</AlertDescription>
+								</Alert>
+							) : (
+								""
+							)}
 							<FormControl
 								isInvalid={formik.errors.usuario && formik.touched.usuario}
 							>
@@ -152,6 +182,20 @@ export const RegistroAdmin = () => {
 								/>
 							</FormControl>
 							<FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
+							<FormControl isInvalid={formik.errors.rol && formik.touched.rol}>
+								<FormLabel>Rol</FormLabel>
+								<RadioGroup id="RoleGroup" defaultValue="COORD">
+									<HStack spacing="24px">
+										<Radio id="radioOne" name="radioOne" value="COORD">
+											Coordinador
+										</Radio>
+										<Radio id="radioTwo" name="radioOne" value="ADMIN">
+											Administrador
+										</Radio>
+									</HStack>
+								</RadioGroup>
+							</FormControl>
+							<FormErrorMessage>{formik.errors.rol}</FormErrorMessage>
 							<Button type="submit" colorScheme="blue" width="full">
 								Registrar
 							</Button>

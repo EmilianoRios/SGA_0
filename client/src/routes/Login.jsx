@@ -58,6 +58,7 @@ export const Login = () => {
 									localStorage.setItem("accessToken", response.data.token);
 									setUser({
 										usuario: response.data.usuario,
+										rol: response.data.rol,
 										id: response.data.id,
 										status: true,
 									});

@@ -9,8 +9,8 @@ export const useHost = () => {
 };
 
 export function HostProvider({ children }) {
-	const DATABASE_BASE_URL_DEPLOY = "http://localhost:3001/";
-	const DATABASE_BASE_URL_LOCAL = "https://api-db-lpmb.herokuapp.com/";
+	const DATABASE_BASE_URL_DEPLOY = "https://api-db-lpmb.herokuapp.com/";
+	const DATABASE_BASE_URL_LOCAL = "http://localhost:3001/";
 
 	return (
 		<HostContext.Provider

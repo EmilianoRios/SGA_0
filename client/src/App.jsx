@@ -36,6 +36,7 @@ import { useAuth } from "./context/UserProvider";
 
 // ---- AXIOS ----
 import axios from "axios";
+import { RequireAuthAdmin } from "./components/RequireAuthAdmin";
 
 export function App() {
 	const { user, setUser } = useAuth();
@@ -108,33 +109,33 @@ export function App() {
 					<Route
 						path="/otros"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<Otros />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
 						path="/barrios"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<Barrios />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
 						path="/circuitos"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<Circuitos />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
 						path="/localidades"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<Localidades />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
@@ -156,9 +157,9 @@ export function App() {
 					<Route
 						path="/otros/gestion/:division"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<GestionOtros />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
@@ -172,25 +173,25 @@ export function App() {
 					<Route
 						path="/otros/listado/:division"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<ListadoOtros />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
 						path="/otros/modificar/:division/:id"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<GestionOtros />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 					<Route
 						path="/registro/admin"
 						element={
-							<RequireAuth>
+							<RequireAuthAdmin>
 								<RegistroAdmin />
-							</RequireAuth>
+							</RequireAuthAdmin>
 						}
 					/>
 				</Routes>

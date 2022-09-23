@@ -49,11 +49,15 @@ export const Home = () => {
 								Incorporados
 							</Button>
 						</ReactRouter>
-						<ReactRouter to="/otros">
-							<Button colorScheme="blue" width="full">
-								Otros
-							</Button>
-						</ReactRouter>
+						{user.rol === "ADMIN" ? (
+							<ReactRouter to="/otros">
+								<Button colorScheme="blue" width="full">
+									Otros
+								</Button>
+							</ReactRouter>
+						) : (
+							""
+						)}
 						<Button onClick={logOut} colorScheme="red" width="full">
 							Cerrar Sesión
 						</Button>
