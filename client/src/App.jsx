@@ -186,14 +186,7 @@ export function App() {
 							</RequireAuthAdmin>
 						}
 					/>
-					<Route
-						path="/registro/admin"
-						element={
-							<RequireAuthAdmin>
-								<RegistroAdmin />
-							</RequireAuthAdmin>
-						}
-					/>
+					<Route path="/registro/admin" element={<RegistroAdmin />} />
 				</Routes>
 			</Container>
 		</>

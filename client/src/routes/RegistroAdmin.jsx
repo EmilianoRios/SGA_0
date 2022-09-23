@@ -13,10 +13,10 @@ import { Field, Formik } from "formik";
 import * as Yup from "yup";
 
 // ---- AXIOS ----
-import axios from "axios";
 
 // ---- CHAKRA-UI ----
 import {
+	Alert,
 	AlertDescription,
 	AlertIcon,
 	Box,
@@ -52,7 +52,7 @@ export const RegistroAdmin = () => {
 		apellidos: "",
 		correo: "",
 		contrasena: "",
-		rol: "COORD",
+		rol: "",
 	};
 
 	const validationSchema = Yup.object().shape({
@@ -84,16 +84,7 @@ export const RegistroAdmin = () => {
 					validationSchema={validationSchema}
 					onSubmit={(values, actions) => {
 						if (user.status == true) {
-							axios
-								.post(`${DATABASE_BASE_URL_LOCAL}admin`, values)
-								.then((response) => {
-									setAlertMessaje({
-										type: "success",
-										messaje: "Registrado exitosamente",
-									});
-									actions.resetForm();
-									navigateTo("/registro/admin");
-								});
+							alert(JSON.stringify(values, null, 2));
 						} else {
 							alert("Sesión no iniciada");
 						}
@@ -184,7 +175,7 @@ export const RegistroAdmin = () => {
 							<FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
 							<FormControl isInvalid={formik.errors.rol && formik.touched.rol}>
 								<FormLabel>Rol</FormLabel>
-								<RadioGroup id="RoleGroup" defaultValue="COORD">
+								<RadioGroup id="RoleGroup">
 									<HStack spacing="24px">
 										<Radio id="radioOne" name="radioOne" value="COORD">
 											Coordinador
