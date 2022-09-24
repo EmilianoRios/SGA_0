@@ -17,7 +17,7 @@ export const Home = () => {
 
 	const logOut = () => {
 		localStorage.removeItem("accessToken");
-		setUser({ usuario: "", id: 0, status: false });
+		setUser({ usuario: "", rol: "", id: 0, status: false });
 		navigateTo("/", { replace: true });
 	};
 
@@ -49,14 +49,12 @@ export const Home = () => {
 								Incorporados
 							</Button>
 						</ReactRouter>
-						{user.rol === "ADMIN" ? (
+						{user.rol === "ADMIN" && (
 							<ReactRouter to="/otros">
 								<Button colorScheme="blue" width="full">
 									Otros
 								</Button>
 							</ReactRouter>
-						) : (
-							""
 						)}
 						<Button onClick={logOut} colorScheme="red" width="full">
 							Cerrar Sesión

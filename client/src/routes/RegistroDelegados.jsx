@@ -193,7 +193,14 @@ export const RegistroDelegados = () => {
 
 	const queryDataDelegado = async () => {
 		const resp = await axios.get(`${routeModifyManager}`);
-		setDataDelegado(resp.data);
+		const modifyData = {
+			...resp.data,
+			SubCoordinadoreId:
+				resp.data.SubCoordinadoreId === null
+					? undefined
+					: resp.data.SubCoordinadoreId,
+		};
+		setDataDelegado(modifyData);
 	};
 
 	/**

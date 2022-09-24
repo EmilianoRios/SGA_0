@@ -73,7 +73,12 @@ export const RegistroBarrios = () => {
 
 	const queryDataBarrio = async () => {
 		const resp = await axios.get(`${routeModifyManager}`);
-		setDataBarrio(resp.data);
+		const modifyData = {
+			...resp.data,
+			CircuitoId:
+				resp.data.CircuitoId === null ? undefined : resp.data.CircuitoId,
+		};
+		setDataBarrio(modifyData);
 	};
 
 	/**

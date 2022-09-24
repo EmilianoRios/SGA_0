@@ -21,6 +21,8 @@ import {
 	Tr,
 } from "@chakra-ui/react";
 
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+
 export const ListadoDelegados = () => {
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
 	/**
@@ -111,7 +113,7 @@ export const ListadoDelegados = () => {
 										to={"/modificar/" + encargado + "/" + delegado.id}
 									>
 										<Button colorScheme="yellow" size="sm">
-											M
+											<EditIcon />
 										</Button>
 									</ReactRouter>
 									<Button
@@ -121,7 +123,7 @@ export const ListadoDelegados = () => {
 											queryDeleteDelegado(delegado.id);
 										}}
 									>
-										E
+										<DeleteIcon />
 									</Button>
 								</Td>
 							</Tr>

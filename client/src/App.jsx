@@ -18,10 +18,12 @@ import { Otros } from "./components/OtrosMenu";
 import { SubCoordinadores } from "./components/SubCoordinadores";
 
 // ---- REQUIRE-AUTH ----
+import { IsAuth } from "./components/isAuth";
 import { RequireAuth } from "./components/RequireAuth";
+import { RequireAuthAdmin } from "./components/RequireAuthAdmin";
 
 // ---- REACT-ROUTER ----
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 // ---- CHAKRA-UI ----
 import { Container } from "@chakra-ui/react";
@@ -36,11 +38,11 @@ import { useAuth } from "./context/UserProvider";
 
 // ---- AXIOS ----
 import axios from "axios";
-import { RequireAuthAdmin } from "./components/RequireAuthAdmin";
 
 export function App() {
 	const { user, setUser } = useAuth();
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
+	let navigateTo = useNavigate();
 
 	useEffect(() => {
 		axios
@@ -53,6 +55,7 @@ export function App() {
 				} else {
 					setUser({
 						usuario: response.data.usuario,
+						rol: response.data.rol,
 						id: response.data.id,
 						status: true,
 					});
@@ -65,7 +68,14 @@ export function App() {
 			<Container maxW="container.xl">
 				<Navbar />
 				<Routes>
-					<Route path="/" element={<Login />} />
+					<Route
+						path="/"
+						element={
+							<IsAuth>
+								<Login />
+							</IsAuth>
+						}
+					/>
 					<Route
 						path="/home"
 						element={
@@ -186,7 +196,14 @@ export function App() {
 							</RequireAuthAdmin>
 						}
 					/>
-					<Route path="/registro/admin" element={<RegistroAdmin />} />
+					<Route
+						path="/registro/admin"
+						element={
+							<RequireAuthAdmin>
+								<RegistroAdmin />
+							</RequireAuthAdmin>
+						}
+					/>
 				</Routes>
 			</Container>
 		</>

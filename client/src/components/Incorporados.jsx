@@ -25,7 +25,7 @@ export const Incorporados = () => {
 					</ReactRouter>
 					<ReactRouter to="/listado/incorporados">
 						<Button colorScheme="blue" width="full">
-							Listado y Modificación de Incorporados
+							Listado, Modificación y Eliminación de Incorporados
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/home">

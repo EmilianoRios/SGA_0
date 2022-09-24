@@ -39,7 +39,7 @@ export const Otros = () => {
 						</ReactRouter>
 						<ReactRouter to="/registro/admin">
 							<Button colorScheme="blue" width="full">
-								Registrar Admin
+								Registrar Coordinador / Administrador
 							</Button>
 						</ReactRouter>
 						<ReactRouter to="/home">

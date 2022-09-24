@@ -25,7 +25,7 @@ export const Delegados = () => {
 					</ReactRouter>
 					<ReactRouter to="/listado/delegados">
 						<Button colorScheme="blue" width="full">
-							Listado y Modificación de Delegados
+							Listado, Modificación y Eliminación de Delegados
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/home">

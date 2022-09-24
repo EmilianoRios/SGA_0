@@ -28,9 +28,10 @@ import {
 } from "@chakra-ui/react";
 
 export const Login = () => {
-	const { setUser } = useAuth();
-	const { DATABASE_BASE_URL_LOCAL } = useHost();
+	const { user, setUser } = useAuth();
 	let navigateTo = useNavigate();
+
+	const { DATABASE_BASE_URL_LOCAL } = useHost();
 
 	const initialValues = {
 		usuario: "",

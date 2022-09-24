@@ -236,7 +236,6 @@ export const RegistroCoordinadores = () => {
 									values.alias = aliasType;
 								});
 						} else {
-							// alert(JSON.stringify(values, null, 2));
 							axios
 								.put(
 									`${DATABASE_BASE_URL_LOCAL}encargados/coordinador/actualizar/porid/${id}`,

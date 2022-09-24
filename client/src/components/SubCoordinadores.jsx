@@ -25,7 +25,7 @@ export const SubCoordinadores = () => {
 					</ReactRouter>
 					<ReactRouter to="/listado/subcoordinadores">
 						<Button colorScheme="blue" width="full">
-							Listado y Modificación de Sub-Coordinadores
+							Listado, Modificación y Eliminación de Sub-Coordinadores
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/home">

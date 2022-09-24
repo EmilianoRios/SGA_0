@@ -25,7 +25,7 @@ export const Barrios = () => {
 					</ReactRouter>
 					<ReactRouter to="/otros/listado/barrios">
 						<Button colorScheme="blue" width="full">
-							Listado y Modificación de Barrios
+							Listado, Modificación y Eliminación de Barrios
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/otros">

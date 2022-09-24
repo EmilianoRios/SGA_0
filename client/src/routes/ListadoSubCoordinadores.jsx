@@ -22,6 +22,8 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+
 export const ListadoSubCoordinadores = () => {
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
 	const toast = useToast();
@@ -118,7 +120,7 @@ export const ListadoSubCoordinadores = () => {
 										to={"/modificar/" + encargado + "/" + subcoordinador.id}
 									>
 										<Button colorScheme="yellow" size="sm">
-											M
+											<EditIcon />
 										</Button>
 									</ReactRouter>
 									<Button
@@ -128,7 +130,7 @@ export const ListadoSubCoordinadores = () => {
 											queryDeleteSubCoordinador(subcoordinador.id);
 										}}
 									>
-										E
+										<DeleteIcon />
 									</Button>
 								</Td>
 							</Tr>

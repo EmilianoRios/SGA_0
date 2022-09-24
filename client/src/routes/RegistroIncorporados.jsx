@@ -192,7 +192,12 @@ export const RegistroIncorporados = () => {
 
 	const queryDataIncorporado = async () => {
 		const resp = await axios.get(`${routeModifyManager}`);
-		setDataIncorporado(resp.data);
+		const modifyData = {
+			...resp.data,
+			DelegadoId:
+				resp.data.DelegadoId === null ? undefined : resp.data.DelegadoId,
+		};
+		setDataIncorporado(modifyData);
 	};
 
 	/**

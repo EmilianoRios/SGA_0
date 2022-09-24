@@ -22,7 +22,7 @@ export const Navbar = () => {
 			</Flex>
 			{user.status == true && (
 				<Center bg="blackAlpha.100" w="100%" p={1} rounded="md">
-					Iniciaste sesion: {user.usuario}
+					Iniciaste sesión: {user.usuario}
 				</Center>
 			)}
 		</>

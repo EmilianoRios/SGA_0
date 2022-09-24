@@ -25,7 +25,7 @@ export const Circuitos = () => {
 					</ReactRouter>
 					<ReactRouter to="/otros/listado/circuitos">
 						<Button colorScheme="blue" width="full">
-							Listado y Modificación de Circuitos
+							Listado, Modificación y Eliminación de Circuitos
 						</Button>
 					</ReactRouter>
 					<ReactRouter to="/otros">

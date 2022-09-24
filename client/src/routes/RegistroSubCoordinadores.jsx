@@ -196,7 +196,14 @@ export const RegistroSubCoordinadores = () => {
 
 	const queryDataSubCoordinador = async () => {
 		const resp = await axios.get(`${routeMofifyManager}`);
-		setDataSubCoordinador(resp.data);
+		const modifyData = {
+			...resp.data,
+			CoordinadoreId:
+				resp.data.CoordinadoreId === null
+					? undefined
+					: resp.data.CoordinadoreId,
+		};
+		setDataSubCoordinador(modifyData);
 	};
 
 	/**

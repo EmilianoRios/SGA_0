@@ -1,6 +1,6 @@
 // ---- REACT ----
 import React, { useState } from "react";
-import { Link as ReactRouter, useNavigate } from "react-router-dom";
+import { Link as ReactRouter } from "react-router-dom";
 
 // ---- AUTH-PROVIDER ----
 import { useHost } from "../context/HostProvider";
@@ -30,15 +30,13 @@ import {
 	Input,
 	Radio,
 	RadioGroup,
+	Text,
 	VStack,
 } from "@chakra-ui/react";
 
 export const RegistroAdmin = () => {
 	const { user } = useAuth();
 	const { DATABASE_BASE_URL_LOCAL } = useHost();
-	let navigateTo = useNavigate();
-
-	const [checkedItem, setCheckedItem] = useState();
 
 	/**
 	 * Variable de estado para mensajes de error o exito de las acciones del usuario
@@ -84,7 +82,21 @@ export const RegistroAdmin = () => {
 					validationSchema={validationSchema}
 					onSubmit={(values, actions) => {
 						if (user.status == true) {
-							alert(JSON.stringify(values, null, 2));
+							axios
+								.post(`${DATABASE_BASE_URL_LOCAL}admin`, values)
+								.then((response) => {
+									setAlertMessaje({
+										type: "success",
+										messaje: "Registrado exitosamente",
+									});
+									actions.resetForm();
+								})
+								.catch((error) => {
+									setAlertMessaje({
+										type: "error",
+										messaje: "Ocurrio un error al registrar el usuario",
+									});
+								});
 						} else {
 							alert("Sesión no iniciada");
 						}
@@ -109,7 +121,12 @@ export const RegistroAdmin = () => {
 							<FormControl
 								isInvalid={formik.errors.usuario && formik.touched.usuario}
 							>
-								<FormLabel>Usuario</FormLabel>
+								<FormLabel>
+									Usuario{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<Field
 									as={Input}
 									id="usuario"
@@ -122,7 +139,12 @@ export const RegistroAdmin = () => {
 							<FormControl
 								isInvalid={formik.errors.nombres && formik.touched.nombres}
 							>
-								<FormLabel>Nombres/s</FormLabel>
+								<FormLabel>
+									Nombres/s{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<Field
 									as={Input}
 									id="nombres"
@@ -135,7 +157,12 @@ export const RegistroAdmin = () => {
 							<FormControl
 								isInvalid={formik.errors.apellidos && formik.touched.apellidos}
 							>
-								<FormLabel>Apellidos/s</FormLabel>
+								<FormLabel>
+									Apellidos/s{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<Field
 									as={Input}
 									id="apellidos"
@@ -148,7 +175,12 @@ export const RegistroAdmin = () => {
 							<FormControl
 								isInvalid={formik.errors.correo && formik.touched.correo}
 							>
-								<FormLabel>Correo</FormLabel>
+								<FormLabel>
+									Correo{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<Field
 									as={Input}
 									id="correo"
@@ -163,7 +195,12 @@ export const RegistroAdmin = () => {
 									formik.errors.contrasena && formik.touched.contrasena
 								}
 							>
-								<FormLabel>Contraseña</FormLabel>
+								<FormLabel>
+									Contraseña{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<Field
 									as={Input}
 									id="contrasena"
@@ -174,15 +211,32 @@ export const RegistroAdmin = () => {
 							</FormControl>
 							<FormErrorMessage>{formik.errors.contrasena}</FormErrorMessage>
 							<FormControl isInvalid={formik.errors.rol && formik.touched.rol}>
-								<FormLabel>Rol</FormLabel>
+								<FormLabel>
+									Rol{" "}
+									<Text as="em" color="tomato">
+										*
+									</Text>
+								</FormLabel>
 								<RadioGroup id="RoleGroup">
 									<HStack spacing="24px">
-										<Radio id="radioOne" name="radioOne" value="COORD">
+										<Field
+											as={Radio}
+											id="radioOne"
+											name="rol"
+											value="COORD"
+											type="radio"
+										>
 											Coordinador
-										</Radio>
-										<Radio id="radioTwo" name="radioOne" value="ADMIN">
+										</Field>
+										<Field
+											as={Radio}
+											id="radioTwo"
+											name="rol"
+											value="ADMIN"
+											type="radio"
+										>
 											Administrador
-										</Radio>
+										</Field>
 									</HStack>
 								</RadioGroup>
 							</FormControl>
@@ -193,7 +247,7 @@ export const RegistroAdmin = () => {
 						</VStack>
 					)}
 				</Formik>
-				<ReactRouter to="/home">
+				<ReactRouter to="/otros">
 					<Button colorScheme="teal" width="full" mt="2">
 						Volver
 					</Button>
